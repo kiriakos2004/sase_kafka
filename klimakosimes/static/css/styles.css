@@ -1,0 +1,120 @@
+
+#main_div {
+    animation: fadeIn 2s;
+    -webkit-animation: fadeIn 2s;
+    -moz-animation: fadeIn 2s;
+    -o-animation: fadeIn 2s;
+    -ms-animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+h1 {
+    font-size: 5vw;
+    font-weight: 600;
+}
+
+h2 {
+    color: azure;
+}
+
+h3 {
+    font-size: 2vw;
+}
+
+#main_div {
+    height: calc(100vh - 80px);
+    background: url(../images/ai.jpg) no-repeat center;
+    background-size: 100% 100%;
+}
+
+#box {
+    background-color: #1e303aef;
+
+}
+
+#box:hover {
+    box-shadow: 0 8px 16px 0 rgba(117, 130, 136, 0.7), 0 6px 20px 0 rgba(117, 130, 136, 0.7);
+}
+
+#box_form {
+    background-color: #3b5b6bbb;
+    width:50%;
+}
+
+#box_form_heatmap {
+    background-color: #7f919abb;
+    width: 80%;
+}
+
+#box_form:hover {
+    box-shadow: 0 8px 16px 0 rgba(117, 130, 136, 0.7), 0 6px 20px 0 rgba(117, 130, 136, 0.7);
+}
+
+.card-title {
+    font-size: 2vw;
+    color: azure;
+}
+
+.card-text {
+    font-size: 0.8vw !important;
+    color: azure;
+}
+
+#title {
+    color: azure;
+    font-size: 2vw;
+}
+
+#chart_box {
+    background-color: #eff5f8cb;
+    width:80%;
+}

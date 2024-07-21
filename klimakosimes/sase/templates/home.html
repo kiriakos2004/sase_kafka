@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+home page
+{% endblock %}
+
+{% block page_body %}
+
+{% include "partials/header.html" %}
+
+<div class="d-flex" id="main_div">
+    <div class="container row align-items-center mx-auto">
+        <div class="row justify-content-md-center">
+            <div id="box_form" style="text-align: center;" class="rounded">
+                {% if file_content %}
+                <div class="container">
+                    <h2>Existing query:</h2>
+                    <pre style="font-size: 20px; color: blue; font-weight: bold;">{{ file_content }}</pre>
+                </div>
+                {% endif %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h2>Please create sase query</h2>
+                    <label for="pattern" id="title">PATTERN SEQ</label>
+                    <input type="text" class="form-control" id="pattern" name="pattern" placeholder="e.g. stock+ a[], stock b">
+                    <label for="where" id="title">WHERE clause</label>
+                    <input type="text" class="form-control" id="where" name="where" placeholder="e.g. partition-contiguity">                    
+                    <label for="and" id="title">AND clause</label>                    
+                    <textarea class="form-control" id="and" name="and" placeholder="e.g. [symbol] AND a[1].price % 500 = 0" rows="2"></textarea>
+                    <label for="within" id="title">WITHIN clause</label>
+                    <input type="text" class="form-control" id="within" name="within" placeholder="e.g. 500">
+                    <br>
+                    <button type="button" id="run-docker" class="btn btn-primary btn-block mb-2" style="background-color: rgb(60, 179, 113); font-size: 28px;">Initiate Kafka</button>               
+                    <button type="submit" class="btn btn-primary btn-block mb-2" style="background-color: rgba(42, 8, 146, 0.82); font-size: 28px;">Save query</button>
+                    <button type="button" id="initiate-sase" class="btn btn-primary btn-block mb-2" style="background-color: rgb(198, 0, 40); font-size: 28px;">Run sase</button>
+                    <br>
+                    <div id="success-message" style="display: none; margin-top: 20px;">
+                        <p style="font-size: 30px; color: rgb(24, 236, 24);">Kafka successfully initiated!</p>
+                    </div>
+                </form>
+            </div>
+        </div>  
+    </div>
+</div>
+
+{% include "partials/footer.html" %}
+
+<script>
+    window.onload = function() {
+        document.getElementById('initiate-sase').addEventListener('click', function() {
+            console.log('Initiate SASE button clicked');
+            fetch('{% url "initiate_sase" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                if (data.status === 'success') {
+                    window.location.href = data.redirect_url;
+                } else {
+                    alert('Failed to initiate SASE: ' + data.error);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to initiate SASE: ' + error);
+            });
+        });
+
+        document.getElementById('run-docker').addEventListener('click', function() {
+            console.log('Run Docker Compose button clicked');
+            fetch('{% url "run_docker_compose" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Response:', data);
+                if (data.status === 'success') {
+                    document.getElementById('success-message').style.display = 'block';
+                } else {
+                    alert('Failed to start Docker Compose: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to start Docker Compose: ' + error);
+            });
+        });
+    };
+</script>
+
+{% endblock %}
