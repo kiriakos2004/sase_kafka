@@ -26,7 +26,7 @@ def delivery_report(err, msg):
         print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
 
 # Path to the CSV file
-csv_file_path = 'stream_data_50000.csv'
+csv_file_path = 'stream_data_200000.csv'
 
 # Produce messages from CSV file
 with open(csv_file_path, 'r') as csvfile:
