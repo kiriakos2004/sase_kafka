@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: . lib/kafka-clients-3.7.1.jar lib/jeval-0.9.4.jar lib/slf4j-api-1.7.32.jar lib/slf4j-simple-1.7.32.jar
+Main-Class: edu.umass.cs.sase.UI.CommandLineUI
+
