@@ -24,7 +24,7 @@ public class StreamController {
     private KafkaConsumer<String, String> createConsumer() {
         Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:29092");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "mygroup"); // Use a consistent group ID
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "mygroup");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); 
@@ -42,7 +42,7 @@ public class StreamController {
 
         try {
             while (running) {
-                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10)); // Poll frequently with a short timeout
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
                 for (ConsumerRecord<String, String> record : records) {
                     if (skipHeader) {
                         skipHeader = false;
@@ -50,11 +50,10 @@ public class StreamController {
                         continue;
                     }
                     if (counter >= myStream.getSize()) {
-                        running = false; // Stop running when the stream size is reached
+                        running = false; 
                         break;
                     }
                     System.out.println("Processing record: " + record.value());
-                    // Assuming the message format is "id,timestamp,eventType,price"
                     String[] parts = record.value().split(",");
                     int id = Integer.parseInt(parts[0]);
                     int timestamp = Integer.parseInt(parts[1]);
